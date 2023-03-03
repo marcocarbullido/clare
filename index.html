@@ -1,35 +1,32 @@
 <!DOCTYPE html>
 <html>
-<script src="https://cdn.jsdelivr.net/npm/@openai/api@0.5.1/dist/openai-api.min.js"></script>
 <head>
-	<title>OpenAI API Example</title>
-	<script src="https://cdn.jsdelivr.net/npm/@openai/api@0.5.1/dist/openai-api.min.js"></script>
+	<title>Hello World</title>
 </head>
 <body>
-	<h1>Ask OpenAI</h1>
-	<input type="text" id="input" placeholder="Ask a question...">
-	<button onclick="ask()">Ask</button>
-	<p id="output"></p>
+	<label for="name">Enter your name:</label>
+	<input type="text" id="name">
+	<button onclick="getLocation()">Get Location</button>
+	<p id="city"></p>
 
 	<script>
-		const openai = new OpenAI('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');
-
-		function ask() {
-			const input = document.getElementById('input').value;
-			openai.Completion.create({
-				engine: 'davinci',
-				prompt: input,
-				maxTokens: 50,
-				n: 1,
-				stop: ['\n']
-			})
-			.then(response => {
-				const answer = response.choices[0].text.trim();
-				document.getElementById('output').innerHTML = answer;
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		function getLocation() {
+			var name = document.getElementById("name").value;
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var lat = position.coords.latitude;
+					var lon = position.coords.longitude;
+					var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en";
+					fetch(url)
+						.then(response => response.json())
+						.then(data => {
+							document.getElementById("city").innerHTML = "Hello, " + name + "! Looks like you're in " + data.city;
+						})
+						.catch(error => console.log(error));
+				});
+			} else {
+				document.getElementById("city").innerHTML = "Geolocation is not supported by this browser.";
+			}
 		}
 	</script>
 </body>
