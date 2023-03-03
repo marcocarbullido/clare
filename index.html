@@ -5,28 +5,33 @@
 </head>
 <body>
 	<h1>Hello World!</h1>
+	<label for="name">Enter your name:</label>
+	<input type="text" id="name">
+	<button onclick="getLocation()">Submit</button>
 	<p id="city"></p>
 
 	<script>
-		// Get user's current city
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function(position) {
-				var lat = position.coords.latitude;
-				var lon = position.coords.longitude;
-				var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en";
-				fetch(url)
-					.then(response => response.json())
-					.then(data => {
-						if (data.city) {
-							document.getElementById("city").innerHTML = "You are in " + data.city;
-						} else {
-							document.getElementById("city").innerHTML = "Location not found.";
-						}
-					})
-					.catch(error => console.log(error));
-			});
-		} else {
-			document.getElementById("city").innerHTML = "Geolocation is not supported by this browser.";
+		function getLocation() {
+			var name = document.getElementById("name").value;
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var lat = position.coords.latitude;
+					var lon = position.coords.longitude;
+					var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en";
+					fetch(url)
+						.then(response => response.json())
+						.then(data => {
+							if (data.city) {
+								document.getElementById("city").innerHTML = "Hello, " + name + ". You are in " + data.city;
+							} else {
+								document.getElementById("city").innerHTML = "Location not found.";
+							}
+						})
+						.catch(error => console.log(error));
+				});
+			} else {
+				document.getElementById("city").innerHTML = "Geolocation is not supported by this browser.";
+			}
 		}
 	</script>
 </body>
