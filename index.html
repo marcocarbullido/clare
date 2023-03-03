@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Welcome</title>
+	<title>Hello World</title>
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -53,16 +53,17 @@
 	</style>
 </head>
 <body>
-	<h1>Welcome</h1>
-	<form>
+	<h1>Hello World</h1>
+	<form id="myForm">
 		<label for="name">Enter your name:</label>
 		<input type="text" id="name">
-		<button onclick="getLocation()">Submit</button>
+		<button type="submit">Get Location</button>
 		<p id="city"></p>
 	</form>
 
 	<script>
-		function getLocation() {
+		document.getElementById("myForm").addEventListener("submit", function(event) {
+			event.preventDefault();
 			var name = document.getElementById("name").value;
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
@@ -79,7 +80,7 @@
 			} else {
 				document.getElementById("city").innerHTML = "Geolocation is not supported by this browser.";
 			}
-		}
+		});
 	</script>
 </body>
 </html>
