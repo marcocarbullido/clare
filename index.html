@@ -2,12 +2,64 @@
 <html>
 <head>
 	<title>Hello World</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+			color: #333;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+		label {
+			font-size: 20px;
+			margin-bottom: 10px;
+			color: #333;
+		}
+		input[type="text"] {
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: none;
+			margin-bottom: 20px;
+			width: 300px;
+			box-shadow: 0px 0px 5px #ccc;
+		}
+		button {
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: none;
+			background-color: #333;
+			color: #fff;
+			cursor: pointer;
+			box-shadow: 0px 0px 5px #ccc;
+		}
+		button:hover {
+			background-color: #555;
+		}
+		p {
+			font-size: 20px;
+			margin-top: 20px;
+			color: #333;
+		}
+	</style>
 </head>
 <body>
-	<label for="name">Enter your name:</label>
-	<input type="text" id="name">
-	<button onclick="getLocation()">Get Location</button>
-	<p id="city"></p>
+	<h1>Hello World</h1>
+	<form>
+		<label for="name">Enter your name:</label>
+		<input type="text" id="name">
+		<button onclick="getLocation()">Get Location</button>
+		<p id="city"></p>
+	</form>
 
 	<script>
 		function getLocation() {
@@ -20,7 +72,7 @@
 					fetch(url)
 						.then(response => response.json())
 						.then(data => {
-							document.getElementById("city").innerHTML = "Hello, " + name + "! Looks like you're in " + data.city;
+							document.getElementById("city").innerHTML = "Hello, " + name + "! You are in " + data.city;
 						})
 						.catch(error => console.log(error));
 				});
