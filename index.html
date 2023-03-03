@@ -17,7 +17,11 @@
 				fetch(url)
 					.then(response => response.json())
 					.then(data => {
-						document.getElementById("city").innerHTML = "You are in " + data.city;
+						if (data.city) {
+							document.getElementById("city").innerHTML = "You are in " + data.city;
+						} else {
+							document.getElementById("city").innerHTML = "Location not found.";
+						}
 					})
 					.catch(error => console.log(error));
 			});
