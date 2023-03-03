@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Hello World</title>
-</head>
 <body>
-	<h1>Hello World!</h1>
+	<h1>Welcome!</h1>
 	<label for="name">Enter your name:</label>
 	<input type="text" id="name">
 	<button onclick="getLocation()">Submit</button>
@@ -22,7 +19,7 @@
 						.then(response => response.json())
 						.then(data => {
 							if (data.city) {
-								document.getElementById("city").innerHTML = "Hello, " + name + ". You are in " + data.city;
+								document.getElementById("city").innerHTML = "Hi, " + name + ". I see you are in " + data.city;
 							} else {
 								document.getElementById("city").innerHTML = "Location not found.";
 							}
