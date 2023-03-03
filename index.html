@@ -5,19 +5,24 @@
 </head>
 <body>
 	<h1>Hello World!</h1>
-	<p id="location"></p>
+	<p id="city"></p>
 
 	<script>
+		// Get user's current city
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(showPosition);
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var lat = position.coords.latitude;
+				var lon = position.coords.longitude;
+				var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en";
+				fetch(url)
+					.then(response => response.json())
+					.then(data => {
+						document.getElementById("city").innerHTML = "You are in " + data.city;
+					})
+					.catch(error => console.log(error));
+			});
 		} else {
-			document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
-		}
-
-		function showPosition(position) {
-			var latitude = position.coords.latitude;
-			var longitude = position.coords.longitude;
-			document.getElementById("location").innerHTML = "Your current location is: " + latitude + ", " + longitude;
+			document.getElementById("city").innerHTML = "Geolocation is not supported by this browser.";
 		}
 	</script>
 </body>
