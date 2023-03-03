@@ -5,5 +5,20 @@
 </head>
 <body>
 	<h1>Hello World!</h1>
+	<p id="location"></p>
+
+	<script>
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+		}
+
+		function showPosition(position) {
+			var latitude = position.coords.latitude;
+			var longitude = position.coords.longitude;
+			document.getElementById("location").innerHTML = "Your current location is: " + latitude + ", " + longitude;
+		}
+	</script>
 </body>
 </html>
