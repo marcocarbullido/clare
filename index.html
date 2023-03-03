@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hello World</title>
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -53,11 +52,11 @@
 	</style>
 </head>
 <body>
-	<h1>Hello World</h1>
+	<h1>Welcome!</h1>
 	<form id="myForm">
 		<label for="name">Enter your name:</label>
 		<input type="text" id="name">
-		<button type="submit">Get Location</button>
+		<button type="submit">Submit</button>
 		<p id="city"></p>
 	</form>
 
@@ -73,7 +72,7 @@
 					fetch(url)
 						.then(response => response.json())
 						.then(data => {
-							document.getElementById("city").innerHTML = "Hello, " + name + "! You are in " + data.city;
+							document.getElementById("city").innerHTML = "Hi, " + name + "! Looks like you're in " + data.city + ".";
 						})
 						.catch(error => console.log(error));
 				});
