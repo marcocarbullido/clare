@@ -54,31 +54,29 @@
 <body>
 	<h1>Welcome!</h1>
 	<form id="myForm">
-		<label for="name">Enter your name:</label>
-		<input type="text" id="name">
-		<button type="submit">Submit</button>
-		<p id="city"></p>
+		<label for="stockSymbol">Enter a stock symbol:</label>
+		<input type="text" id="stockSymbol">
+		<button type="submit">Get Price</button>
+		<p id="stockPrice"></p>
 	</form>
 
 	<script>
 		document.getElementById("myForm").addEventListener("submit", function(event) {
 			event.preventDefault();
-			var name = document.getElementById("name").value;
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var lat = position.coords.latitude;
-					var lon = position.coords.longitude;
-					var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en";
-					fetch(url)
-						.then(response => response.json())
-						.then(data => {
-							document.getElementById("city").innerHTML = "Hi, " + name + "! Looks like you're in " + data.city + ".";
-						})
-						.catch(error => console.log(error));
-				});
-			} else {
-				document.getElementById("city").innerHTML = "Geolocation is not supported by this browser.";
-			}
+			var symbol = document.getElementById("stockSymbol").value;
+
+      var apiKey = "demo";
+      var url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${apiKey}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("stockPrice").innerHTML = `The current price of ${symbol} is: ${data['Global Quote']['05. price']}`;
+        })
+        .catch(error => {
+          console.log(error);
+          document.getElementById("stockPrice").innerHTML = "Something went wrong, please try again.";
+        });
 		});
 	</script>
 </body>
