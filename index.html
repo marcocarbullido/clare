@@ -61,23 +61,28 @@
 	</form>
 
 	<script>
-		document.getElementById("myForm").addEventListener("submit", function(event) {
-			event.preventDefault();
-			var symbol = document.getElementById("stockSymbol").value;
-
-      var apiKey = "demo";
-      var url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${apiKey}`;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("stockPrice").innerHTML = `The current price of ${symbol} is: ${data['Global Quote']['05. price']}`;
-        })
-        .catch(error => {
-          console.log(error);
-          document.getElementById("stockPrice").innerHTML = "Something went wrong, please try again.";
-        });
-		});
+	    document.getElementById("myForm").addEventListener("submit", function(event) {
+	        event.preventDefault();
+	        var symbol = document.getElementById("stockSymbol").value;
+	
+	        // Replace with your actual API key
+	        var apiKey = "Your_AlphaVantage_API_Key";
+	        var url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${apiKey}`;
+	
+	        fetch(url)
+	            .then(response => response.json())
+	            .then(data => {
+	                if(data['Global Quote']) {
+	                    document.getElementById("stockPrice").innerHTML = `The current price of ${symbol} is: ${data['Global Quote']['05. price']}`;
+	                } else {
+	                    throw new Error(data['Note'] || "Invalid ticker symbol");
+	                }
+	            })
+	            .catch(error => {
+	                console.log(error);
+	                document.getElementById("stockPrice").innerHTML = "Error: " + error.message;
+	            });
+	    });
 	</script>
 </body>
 </html>
